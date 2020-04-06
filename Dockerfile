@@ -81,14 +81,6 @@ RUN apt-get install -y --no-install-recommends --allow-unauthenticated \
 && apt-get autoremove --yes \
 && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# Set up PostGIS
-RUN wget http://download.osgeo.org/postgis/source/postgis-3.0.0.tar.gz -O postgis.tar.gz \
- && mkdir -p postgis_src \
- && tar -xvzf postgis.tar.gz --strip 1 -C postgis_src \
- && rm postgis.tar.gz \
- && cd postgis_src \
- && ./configure && make && make install \
- && cd .. && rm -rf postgis_src
 
 # Set up renderer user
 RUN adduser --disabled-password --gecos "" renderer
@@ -124,7 +116,7 @@ RUN mkdir -p /home/renderer/src \
 # Configure stylesheet
 RUN mkdir -p /home/renderer/src \
  && cd /home/renderer/src \
- && git clone https://github.com/gravitystorm/openstreetmap-carto.git \
+ && git clone https://github.com/bobbymaher/openstreetmap-carto.git \
  && git -C openstreetmap-carto checkout v4.23.0 \
  && cd openstreetmap-carto \
  && rm -rf .git \
